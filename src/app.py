@@ -2,12 +2,29 @@ import sys
 import os
 import subprocess
 import pyperclip
+import shutil
 
 from utils.utils import load_accounts, generate_otp
 from utils.commands import handle_commands
 
-# Set PATH and terminal title
-os.environ["PATH"] += os.pathsep + "/home/leo/.fzf/bin"
+env_user = os.environ.get("SUDO_USER") or os.environ.get("USER")
+user_home = os.path.expanduser(f"~{env_user}") if env_user else os.path.expanduser("~")
+
+fzf_env = os.environ.get("FZF_PATH")
+fallback_fzf = os.path.join(user_home, ".fzf/bin")
+FZF_PATH = fzf_env or fallback_fzf
+
+# check if fzf is installed
+if shutil.which("fzf") is None:
+    os.environ["PATH"] += os.pathsep + FZF_PATH
+    if shutil.which("fzf") is None:
+        print("fzf not found in PATH.")
+        print("If you don't have it, install it with:")
+        print("   sudo apt install fzf            # Debian/Ubuntu")
+        print("   brew install fzf                # macOS (Homebrew)")
+        print("If you already have it, export its path:")
+        print("   export FZF_PATH=$(dirname $(which fzf))")
+        sys.exit(1)
 
 def set_terminal_title(title):
     sys.stdout.write(f"\33]0;{title}\a")

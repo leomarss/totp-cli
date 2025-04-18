@@ -37,6 +37,12 @@ sudo apt install fzf   # Debian/Ubuntu
 # or
 brew install fzf       # macOS
 ```
+If `fzf` is installed but not found by the script, you can set its path manually:
+
+```bash
+export FZF_PATH=$(dirname $(which fzf))
+```
+
 
 ## 📁 File Structure
 
@@ -76,7 +82,7 @@ alias otpcli='sudo ~/totp-cli/env/bin/python ~/totp-cli/src/app.py'
 
 ## 🛠️ Command Line Options
 
-```
+```bash
 otpcli                          Interactive menu with all OTP accounts
 otpcli <keyword>                Filter accounts by keyword(s), auto-copy if exactly one match
 
@@ -98,7 +104,7 @@ OTP code for GitHub (you@example.com): 123456
 Valid for another 17 seconds (copied to clipboard)
 ```
 
-```bash
+```
 $ otpcli --stats
 
 TOTP CLI - Account Stats
@@ -138,14 +144,6 @@ To restore:
 otpcli --restore secrets.json.bak.2025-04-18_23-30-00
 ```
 
-## 🧪 Coming Soon
-
-- `--search <issuer|name>` to print OTP directly (no menu)
-- JSON schema validation and linting
-- `--export-csv` for secure offline backup
-- `--import <file>` to merge secrets interactively
-
 ## 💙 License
-
 
 MIT License. Built for personal security and terminal love. Contributions welcome!
