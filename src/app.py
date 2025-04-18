@@ -51,7 +51,7 @@ else:
     filtered = accounts
 
 if not filtered:
-    print("❌ No matching accounts found.")
+    print("No matching accounts found.")
     sys.exit(1)
 
 if len(filtered) == 1:
