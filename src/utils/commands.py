@@ -8,7 +8,7 @@ from utils.utils import (
     get_stats
 )
 
-def handle_commands(argv, accounts, json_path, backup_dir):
+def handle_commands(argv, accounts, json_path, backup_dir, script_dir):
     if "--help" in argv or "-h" in argv:
         print("""
 TOTP CLI - Terminal One-Time Password
@@ -45,7 +45,8 @@ Usage:
     if "--edit" in argv:
         if "--backup" in argv:
             path = create_backup(json_path, backup_dir)
-            print(f"Backup saved to: {path}")
+            rel_path = os.path.relpath(path, start=os.path.dirname(script_dir))
+            print(f"Backup saved to: {rel_path}")
 
         editor = os.environ.get("EDITOR")
         if not editor or not shutil.which(editor):

@@ -22,7 +22,7 @@ def generate_otp(secret):
 def create_backup(json_path, backup_dir):
     os.makedirs(backup_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    backup_name = f"otp_secrets.json.bak.{timestamp}"
+    backup_name = f"secrets.json.bak.{timestamp}"
     backup_path = os.path.join(backup_dir, backup_name)
     shutil.copy2(json_path, backup_path)
     return backup_path
@@ -30,7 +30,7 @@ def create_backup(json_path, backup_dir):
 def list_backups(backup_dir):
     return sorted(
         f for f in os.listdir(backup_dir)
-        if f.startswith("otp_secrets.json.bak.")
+        if f.startswith("secrets.json.bak.")
     )
 
 def restore_backup(backup_name, backup_dir, json_path):

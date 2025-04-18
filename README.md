@@ -44,11 +44,11 @@ brew install fzf       # macOS
 totp-cli/
 ├── env/                         # Python virtual environment
 ├── json/
-│   ├── otp_secrets.json         # Your TOTP secret file
+│   ├── secrets.json             # Your TOTP secret file
 │   └── backups/                 # Backup files
 ├── src/
 │   ├── app.py                   # Main CLI entrypoint
-│   ├── otp_show.py              # Standalone OTP display
+│   ├── monitor.py               # Live TOTP code viewer
 │   └── utils/                   # All internal modules
 │       ├── preview.py           # Preview shown in fzf
 │       ├── utils.py             # General utility functions

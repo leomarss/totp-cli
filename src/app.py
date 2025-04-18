@@ -17,14 +17,14 @@ set_terminal_title("TOTP CLI - Terminal One-Time Password")
 
 # === Paths ===
 script_dir = os.path.dirname(os.path.abspath(__file__))
-json_path = os.path.join(script_dir, "../json/otp_secrets.json")
+json_path = os.path.join(script_dir, "../json/secrets.json")
 backup_dir = os.path.join(script_dir, "../json/backups")
 preview_script = os.path.join(script_dir, "utils/preview.py")
 python_path = os.path.join(script_dir, "../env/bin/python")
 
 accounts = load_accounts(json_path)
 
-handle_commands(sys.argv, accounts, json_path, backup_dir)
+handle_commands(sys.argv, accounts, json_path, backup_dir, script_dir)
 
 # === Filter accounts by args ===
 query = [q.lower() for q in sys.argv[1:] if not q.startswith("--")]

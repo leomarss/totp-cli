@@ -10,9 +10,8 @@ if os.geteuid() != 0:
     print("This script must be run as root (use sudo).")
     sys.exit(1)
 
-# === Percorsi ===
 script_dir = os.path.dirname(os.path.abspath(__file__))
-json_path = os.path.join(script_dir, "../../json/otp_secrets2.json")
+json_path = os.path.join(script_dir, "../../../json/secrets.json")
 
 uri = input("Paste otpauth-migration string: ").strip()
 
@@ -44,8 +43,7 @@ for param in payload.otp_parameters:
 with open(json_path, "w") as f:
     json.dump(accounts, f, indent=2)
 
-# Imposta permessi e ownership
 subprocess.run(["chown", "root:root", json_path], check=True)
 subprocess.run(["chmod", "600", json_path], check=True)
 
-print("\nFile saved in otp_secrets.json with secure permissions.")
+print("\nFile saved in json/secrets.json with secure permissions.")

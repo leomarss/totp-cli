@@ -21,7 +21,7 @@ def get_color(seconds):
 
 selected = sys.argv[1]
 script_dir = os.path.dirname(os.path.abspath(__file__))
-json_path = os.path.abspath(os.path.join(script_dir, "../../json/otp_secrets.json"))
+json_path = os.path.abspath(os.path.join(script_dir, "../../json/secrets.json"))
 
 with open(json_path, "r") as f:
     accounts = json.load(f)
