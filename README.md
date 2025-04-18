@@ -82,7 +82,7 @@ alias otpcli='sudo ~/totp-cli/env/bin/python ~/totp-cli/src/app.py'
 
 ## 🛠️ Command Line Options
 
-```bash
+```
 otpcli                          Interactive menu with all OTP accounts
 otpcli <keyword>                Filter accounts by keyword(s), auto-copy if exactly one match
 
