@@ -28,7 +28,7 @@ A powerful, terminal-based One-Time Password (TOTP) manager written in Python. D
 cd ~/totp-cli
 python3 -m venv env
 source env/bin/activate
-pip install -r requirements.txt
+pip install -r src/requirements.txt
 ```
 
 Make sure `fzf` is installed:
@@ -114,7 +114,7 @@ Unique issuers: 4
 
 ## 🔐 OTP Storage Format
 
-All OTP secrets are stored in `src/json/otp_secrets.json` as a list of dicts:
+All OTP secrets are stored in `src/json/secrets.json` as a list of dicts:
 
 ```json
 [
@@ -131,11 +131,11 @@ You can import from Google Authenticator QR via script.
 ## 🧯 Backup and Restore
 
 - Backups are stored in `src/json/backups/`
-- File format: `otp_secrets.json.bak.YYYY-MM-DD_HH-MM-SS`
+- File format: `secrets.json.bak.YYYY-MM-DD_HH-MM-SS`
 
 To restore:
 ```bash
-otpcli --restore otp_secrets.json.bak.2025-04-18_23-30-00
+otpcli --restore secrets.json.bak.2025-04-18_23-30-00
 ```
 
 ## 🧪 Coming Soon
