@@ -65,18 +65,18 @@ totp-cli/
 
 ```bash
 # Run the OTP menu
-sudo ./env/bin/python ./src/scripts/app.py
+sudo ./env/bin/python ./src/app.py
 ```
 
 Or create an alias in your shell (bash/zsh):
 
 ```bash
-alias otpcli='sudo ~/totp-cli/env/bin/python ~/totp-cli/src/scripts/app.py'
+alias otpcli='sudo ~/totp-cli/env/bin/python ~/totp-cli/src/app.py'
 ```
 
 ## 🛠️ Command Line Options
 
-```bash
+```
 otpcli                          Interactive menu with all OTP accounts
 otpcli <keyword>                Filter accounts by keyword(s), auto-copy if exactly one match
 
@@ -91,7 +91,7 @@ otpcli <keyword>                Filter accounts by keyword(s), auto-copy if exac
 
 ## 🧾 Example Output
 
-```bash
+```
 $ otpcli github
 
 OTP code for GitHub (you@example.com): 123456
@@ -114,7 +114,7 @@ Unique issuers: 4
 
 ## 🔐 OTP Storage Format
 
-All OTP secrets are stored in `src/json/secrets.json` as a list of dicts:
+All OTP secrets are stored in `json/secrets.json` as a list of dicts:
 
 ```json
 [
@@ -130,7 +130,7 @@ You can import from Google Authenticator QR via script.
 
 ## 🧯 Backup and Restore
 
-- Backups are stored in `src/json/backups/`
+- Backups are stored in `json/backups/`
 - File format: `secrets.json.bak.YYYY-MM-DD_HH-MM-SS`
 
 To restore:
@@ -141,11 +141,9 @@ otpcli --restore secrets.json.bak.2025-04-18_23-30-00
 ## 🧪 Coming Soon
 
 - `--search <issuer|name>` to print OTP directly (no menu)
-- Support for HOTP (counter-based tokens)
 - JSON schema validation and linting
 - `--export-csv` for secure offline backup
 - `--import <file>` to merge secrets interactively
-- GitHub Actions for automated tests and linting
 
 ## 💙 License
 
