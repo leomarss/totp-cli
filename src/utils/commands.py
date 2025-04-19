@@ -9,9 +9,7 @@ from utils.utils import (
     initialize_otp_setup
 )
 
-def handle_commands(argv, accounts, json_path, backup_dir, script_dir):
-    if "--help" in argv or "-h" in argv:
-        print("""
+HELP_MSG = """
 TOTP CLI - Terminal One-Time Password
 
 Usage:
@@ -30,7 +28,23 @@ Usage:
 --backup --remove-all             Delete all backup files (with confirmation)
 --list-backups                    Show available backup files
 --restore <FILENAME>              Restore a specific backup
-""")
+"""
+
+def handle_commands(argv, accounts, json_path, backup_dir, script_dir):
+    known_flags = {
+        "--help", "-h", "--initialize", "--list", "--stats",
+        "--edit", "--backup", "--remove", "--remove-all",
+        "--list-backups", "--restore"
+    }
+
+    unrecognized = [arg for arg in argv if arg.startswith("-") and not any(arg.startswith(flag) for flag in known_flags)]
+    if unrecognized:
+        for cmd in unrecognized:
+            print(f"{cmd} command not found. Use --help for usage information.")
+        sys.exit(1)
+        
+    if "--help" in argv or "-h" in argv:
+        print(HELP_MSG)
         sys.exit(0)
 
     if "--list" in argv:
