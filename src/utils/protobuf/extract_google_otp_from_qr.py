@@ -40,10 +40,13 @@ for param in payload.otp_parameters:
         "secret": secret_b32
     })
 
+# create parent folder if needed
+os.makedirs(os.path.dirname(json_path), exist_ok=True)
+
 with open(json_path, "w") as f:
     json.dump(accounts, f, indent=2)
 
-subprocess.run(["chown", "root:root", json_path], check=True)
+subprocess.run(["chown", "root:", json_path], check=True)
 subprocess.run(["chmod", "600", json_path], check=True)
 
 print("\nFile saved in json/secrets.json with secure permissions.")
