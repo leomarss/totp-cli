@@ -83,16 +83,21 @@ alias otpcli='sudo ~/totp-cli/env/bin/python ~/totp-cli/src/app.py'
 ## 🛠️ Command Line Options
 
 ```
-otpcli                          Interactive menu with all OTP accounts
-otpcli <keyword>                Filter accounts by keyword(s), auto-copy if exactly one match
+otpcli                            Interactive menu with all OTP accounts
+otpcli <keyword>                  Filter accounts by keyword(s), auto-copy if exactly one match
 
---help, -h                      Show this help message
---list                          Print all account labels
---stats                         Show stats per issuer
---edit                          Open the JSON file in default editor
---edit --backup                 Backup file before editing
---list-backups                  Show available backup files
---restore <FILENAME>            Restore a specific backup
+--help, -h                        Show this help message
+--initialize                      Run the setup to import OTP from Google Authenticator
+--list                            Print all account labels
+--stats                           Show stats per issuer
+--edit                            Open the JSON file in default editor
+--edit --backup                   Backup file before editing
+--edit --editor=<CMD>             Use specific editor (e.g. --editor=vim)
+--backup                          Create a manual backup
+--backup --remove <FILES...>      Delete one or more backup files
+--backup --remove-all             Delete all backup files (with confirmation)
+--list-backups                    Show available backup files
+--restore <FILENAME>              Restore a specific backup
 ```
 
 ## 🧾 Example Output
@@ -132,7 +137,7 @@ All OTP secrets are stored in `json/secrets.json` as a list of dicts:
 ]
 ```
 
-You can import from Google Authenticator QR via script.
+You can import secrets from a Google Authenticator QR code using the `--initialize` command.
 
 ## 🧯 Backup and Restore
 
