@@ -13,6 +13,7 @@ A powerful, terminal-based One-Time Password (TOTP) manager written in Python. D
 - JSON-based secret storage
 - Backup and restore support
 - Terminal tab renaming
+- Import from Google Authenticator QR (via image)
 
 ## 📦 Requirements
 
@@ -37,6 +38,14 @@ sudo apt install fzf   # Debian/Ubuntu
 # or
 brew install fzf       # macOS
 ```
+
+To import OTP secrets from a Google QR code:
+```bash
+sudo apt install zbar-tools   # Debian/Ubuntu
+# or
+brew install zbar       # macOS
+```
+
 If `fzf` is installed but not found by the script, you can set its path manually:
 
 ```bash
@@ -79,6 +88,15 @@ Or create an alias in your shell (bash/zsh):
 ```bash
 alias otpcli='sudo ~/totp-cli/env/bin/python ~/totp-cli/src/app.py'
 ```
+
+To import OTP secrets from Google Authenticator, you can use:
+
+```bash
+otpcli --initialize
+```
+
+If you don't already have the migration string, the script will let you scan a QR code image (e.g. `/home/user/Downloads/otp.png`) using `zbarimg`.  
+The OTP secrets will be imported automatically and securely saved.
 
 ## 🛠️ Command Line Options
 
@@ -148,6 +166,12 @@ To restore:
 ```bash
 otpcli --restore secrets.json.bak.2025-04-18_23-30-00
 ```
+
+## 📌 Credits
+
+This project uses [`zbarimg`](https://github.com/mchehab/zbar) to scan QR codes from images.  
+Make sure it is installed to use `--initialize` with QR import.
+
 
 ## 💙 License
 
