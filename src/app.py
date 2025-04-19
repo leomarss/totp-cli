@@ -39,6 +39,11 @@ backup_dir = os.path.join(script_dir, "../json/backups")
 preview_script = os.path.join(script_dir, "utils/preview.py")
 python_path = os.path.join(script_dir, "../env/bin/python")
 
+if not os.path.exists(json_path) and '--initialize' not in sys.argv:
+    print("\nNo secrets.json found. Initialize it with:")
+    print("  otpcli --initialize")
+    sys.exit(1)
+
 accounts = load_accounts(json_path)
 
 handle_commands(sys.argv, accounts, json_path, backup_dir, script_dir)

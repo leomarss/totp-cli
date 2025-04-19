@@ -5,7 +5,8 @@ from utils.utils import (
     create_backup,
     restore_backup,
     list_backups,
-    get_stats
+    get_stats,
+    initialize_otp_setup
 )
 
 def handle_commands(argv, accounts, json_path, backup_dir, script_dir):
@@ -18,6 +19,7 @@ Usage:
   otpcli <keyword>                Filter accounts by keyword(s), auto-copy if exactly one match
 
 --help, -h                        Show this help message
+--initialize                      Run the setup to import OTP from Google Authenticator
 --list                            Print all account labels
 --stats                           Show stats per issuer
 --edit                            Open the JSON file in default editor
@@ -80,4 +82,8 @@ Usage:
         else:
             for b in backups:
                 print(f"  {b}")
+        sys.exit(0)
+        
+    if "--initialize" in argv:
+        initialize_otp_setup()
         sys.exit(0)
