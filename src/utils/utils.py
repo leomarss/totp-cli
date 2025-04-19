@@ -1,4 +1,4 @@
-import sys
+import subprocess
 import pyotp
 import time
 import json
@@ -55,9 +55,41 @@ def get_stats(accounts):
 
 
 def initialize_otp_setup():
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    protobuf_dir = os.path.join(script_dir, "protobuf")
-    sys.path.insert(0, protobuf_dir)
+    choice = input("Do you already have the OTP migration string? [y/N] ").strip().lower()
+    if choice != "y":
+        print("Opening scanner using zbarimg...")
+        path = input("Path to QR code image (e.g. /home/user/Downloads/otp.png): ").strip()
+        if not os.path.exists(path):
+            print("File not found. Please check the path and try again.")
+            return
+        if not os.path.isfile(path):
+            print("Path is not a file. Please provide a valid file path.")
+            return
+        if not os.access(path, os.R_OK):
+            print("File is not readable. Please check permissions.")
+            return
+        if not shutil.which("zbarimg"):
+            print("zbarimg is not installed. Please install it first.")
+            return
+        print("Scanning QR code...")
+        try:
+            result = subprocess.run(
+                ["zbarimg", "--raw", "--quiet", path],
+                check=True, capture_output=True, text=True
+            )
+            scanned_uri = result.stdout.strip()
+            print("\nScanned successfully. Importing...")
 
-    extract_path = os.path.join(protobuf_dir, "extract_google_otp_from_qr.py")
+            os.environ["MIGRATION_STRING"] = scanned_uri
+        except FileNotFoundError:
+            print("'zbarimg' not found. Please install it first.")
+            return
+        except subprocess.CalledProcessError:
+            print("Failed to read QR code using zbarimg.")
+            return
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    extract_path = os.path.join(script_dir, "protobuf", "extract_google_otp_from_qr.py")
     runpy.run_path(extract_path, run_name="__main__")
+    del os.environ["MIGRATION_STRING"] # remove the environment variable after use just to be sure
+    print("OTP secrets imported successfully.")

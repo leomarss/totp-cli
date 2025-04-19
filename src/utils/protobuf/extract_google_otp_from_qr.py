@@ -1,7 +1,6 @@
 import sys
 import os
 import base64
-import migration_pb2
 import json
 import subprocess
 from urllib.parse import unquote
@@ -11,9 +10,15 @@ if os.geteuid() != 0:
     sys.exit(1)
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, script_dir)
+
+import migration_pb2 # import after sys.path.insert otherwise it will not find the module
+
 json_path = os.path.join(script_dir, "../../../json/secrets.json")
 
-uri = input("Paste otpauth-migration string: ").strip()
+uri = os.environ.get("MIGRATION_STRING")
+if not uri:
+    uri = input("Paste otpauth-migration string: ").strip()
 
 data_b64 = uri.split("data=")[1]
 data_b64 = unquote(data_b64)
@@ -26,7 +31,7 @@ data_bytes = base64.urlsafe_b64decode(data_b64)
 payload = migration_pb2.MigrationPayload()
 payload.ParseFromString(data_bytes)
 
-print("\n=== Accounts found ===")
+print("\nAccounts found:")
 accounts = []
 
 for param in payload.otp_parameters:
