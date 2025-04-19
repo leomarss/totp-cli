@@ -50,7 +50,15 @@ Usage:
             rel_path = os.path.relpath(path, start=os.path.dirname(script_dir))
             print(f"Backup saved to: {rel_path}")
 
-        editor = os.environ.get("EDITOR")
+        editor = None
+        for arg in argv:
+            if arg.startswith("--editor="):
+                editor = arg.split("=", 1)[1]
+                break
+
+        if not editor:
+            editor = os.environ.get("EDITOR")
+
         if not editor or not shutil.which(editor):
             for fallback in ["vi", "nano", "vim"]:
                 if shutil.which(fallback):
@@ -61,7 +69,13 @@ Usage:
                 sys.exit(1)
 
         os.execvp(editor, [editor, json_path])
-
+        
+    if "--backup" in argv:
+        path = create_backup(json_path, backup_dir)
+        rel_path = os.path.relpath(path, start=os.path.dirname(script_dir))
+        print(f"Backup saved to: {rel_path}")
+        sys.exit(0)
+        
     if "--restore" in argv:
         try:
             index = argv.index("--restore")
