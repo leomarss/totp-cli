@@ -91,5 +91,5 @@ def initialize_otp_setup():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     extract_path = os.path.join(script_dir, "protobuf", "extract_google_otp_from_qr.py")
     runpy.run_path(extract_path, run_name="__main__")
-    del os.environ["MIGRATION_STRING"] # remove the environment variable after use just to be sure
+    os.environ.pop("MIGRATION_STRING", None) # remove the environment variable after use just to be sure
     print("OTP secrets imported successfully.")
